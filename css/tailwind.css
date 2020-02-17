@@ -30,10 +30,4 @@
   @apply bg-gray-500;
 }
 
-@screen sm {
-  .btn {
-    @apply text-base
-  }
-}
-
 @tailwind utilities;
