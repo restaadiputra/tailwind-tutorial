@@ -30,7 +30,7 @@ You will find  a file named `tailwind.css` under directory `public/build`.  This
 
 You can run the website by open it in a browser or host it in localhost using `live-server`
 
-Watch Tailwind
+#### Watch Tailwind
 
 You can also watch tailwind to auto-generate the TailwindCSS if there is a changed in config
 
