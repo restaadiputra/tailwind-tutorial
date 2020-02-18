@@ -16,8 +16,8 @@
         <div class="sm:hidden">
           <button id="button-menu" type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
             <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-              <path id="cross-menu" class="hidden" fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/>
-              <path id="square-menu" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+              <path class="hidden" fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/>
+              <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
             </svg>
           </button>
         </div>
@@ -27,13 +27,14 @@
         <a href="#" class="block px-2 py-1 mt-1 text-white font-semibold hover:bg-gray-800 hover:rounded sm:mt-0 sm:ml-2">Trips</a>
         <a href="#" class="block px-2 py-1 mt-1 text-white font-semibold hover:bg-gray-800 hover:rounded sm:mt-0 sm:ml-2">Messages</a>
         <div class="relative ml-6">
-          <button class="block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white">
+          <button id="avatar" class="relative block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white z-10">
             <img class="h-full w-full object-cover object-center" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80" alt="Your avatar">
           </button>
-          <div class="absolute top-auto right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-xl">
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Account Settings</a>
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Support</a>
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign Out</a>
+          <button id="overlay" tabindex="-1" class="hidden fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"></button>
+          <div id="avatar-menu" class="hidden absolute top-auto right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-xl">
+            <a href="#" class="avatar-menu block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Account Settings</a>
+            <a href="#" class="avatar-menu  block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Support</a>
+            <a href="#" class="avatar-menu  block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign Out</a>
           </div>
         </div>
       </div>
@@ -41,17 +42,41 @@
   </body>
   <script>
     $(document).ready(function(){
+      // Open navbar menu
       $("#button-menu").click(function() {
         if ($("#menu").hasClass("hidden")) {
           $("#menu").addClass("block");
           $("#menu").removeClass("hidden");
-          $("#cross-menu").removeClass("hidden");
-          $("#square-menu").addClass("hidden");
+          $("#cross-menu").show();
+          $("#square-menu").hide();
         } else {
           $("#menu").addClass("hidden");
           $("#menu").removeClass("block");
-          $("#cross-menu").addClass("hidden");
-          $("#square-menu").removeClass("hidden");
+          $("#cross-menu").hide();
+          $("#square-menu").show();
+        }
+      });
+
+      // Toggle avatar menu
+      function toggleAvatarMenu() {
+        if($("#avatar-menu").is(":visible")){
+          $("#avatar-menu").hide();
+          $("#overlay").hide();
+        } else{
+          $("#avatar-menu").show();
+          $("#overlay").show();
+        }
+      }
+
+      // Toggle avatar menu on this click button
+      $("#avatar").click(toggleAvatarMenu);
+      $(".avatar-menu").click(toggleAvatarMenu);
+      $("#overlay").click(toggleAvatarMenu);
+
+      // Close avatar menu on 'esc' keydown
+      $(document).keydown(function(e) {
+        if (e.which === 'Esc' || e.which === 'Escape' || e.which === 27) {
+          toggleAvatarMenu();
         }
       });
     });
